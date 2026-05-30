@@ -123,14 +123,22 @@
 
   /* Glass morphism */
   .glass {
-    background: rgba(17, 24, 39, 0.7);
-    backdrop-filter: blur(12px);
+    background: rgba(10, 14, 26, 0.45);
+    backdrop-filter: blur(12px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   }
   .glass-strong {
-    background: rgba(17, 24, 39, 0.85);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(10, 14, 26, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  }
+  .glass-navbar {
+    background: rgba(10, 14, 26, 0.6);
+    backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
   /* Gradient text */
