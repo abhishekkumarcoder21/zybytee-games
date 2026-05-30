@@ -89,28 +89,30 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 glass-navbar">
-        <div className="mx-auto max-w-[1440px] px-4 sm:px-6">
+      <header className="sticky top-0 z-50 w-full px-4 sm:px-6 pt-4 pb-0 flex justify-center pointer-events-none">
+        <nav className="pointer-events-auto w-full max-w-[1440px] glass-navbar rounded-full px-4 sm:px-6 transition-all duration-300 shadow-lg shadow-black/25">
           <div className="flex h-16 items-center justify-between gap-4">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 shrink-0">
-              <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-neon-blue to-neon-purple">
-                <Gamepad2 className="h-5 w-5 text-white" />
-              </div>
-              <span className="hidden sm:block text-xl font-bold gradient-text">
-                ZyBytee
-              </span>
-            </Link>
+            {/* Left: Logo */}
+            <div className="flex flex-1 justify-start">
+              <Link href="/" className="flex items-center gap-2 shrink-0">
+                <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-neon-blue to-neon-purple">
+                  <Gamepad2 className="h-5 w-5 text-white" />
+                </div>
+                <span className="hidden sm:block text-xl font-bold gradient-text">
+                  ZyBytee
+                </span>
+              </Link>
+            </div>
 
-            {/* Desktop Nav */}
-            <div className="hidden lg:flex items-center gap-1">
+            {/* Center: Desktop Nav */}
+            <div className="hidden lg:flex items-center justify-center gap-1">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                    className={`relative flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-full transition-colors ${
                       isActive
                         ? 'text-neon-blue'
                         : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
@@ -121,7 +123,7 @@ export function Navbar() {
                     {isActive && (
                       <motion.div
                         layoutId="navbar-indicator"
-                        className="absolute inset-0 rounded-lg bg-neon-blue/10 border border-neon-blue/20"
+                        className="absolute inset-0 rounded-full bg-neon-blue/10 border border-neon-blue/20"
                         transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                       />
                     )}
@@ -130,8 +132,8 @@ export function Navbar() {
               })}
             </div>
 
-            {/* Search + Actions */}
-            <div className="flex items-center gap-2">
+            {/* Right: Search + Actions */}
+            <div className="flex flex-1 items-center justify-end gap-2">
               {/* Desktop Search */}
               <div ref={searchRef} className="relative hidden md:block">
                 <form onSubmit={handleSearchSubmit}>
@@ -143,7 +145,7 @@ export function Navbar() {
                       value={searchValue}
                       onChange={handleSearchChange}
                       onFocus={() => setSearchOpen(true)}
-                      className="w-64 pl-9 bg-white/5 border-white/10 focus:border-neon-blue/50 focus:ring-neon-blue/20"
+                      className="w-64 pl-9 bg-white/5 border-white/10 focus:border-neon-blue/50 focus:ring-neon-blue/20 rounded-full"
                     />
                   </div>
                 </form>
@@ -155,7 +157,7 @@ export function Navbar() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="absolute top-full mt-2 w-80 rounded-xl glass-strong shadow-2xl overflow-hidden"
+                      className="absolute top-full mt-2 w-80 rounded-2xl glass-strong shadow-2xl overflow-hidden border border-white/10"
                     >
                       {searchResults.map((game) => (
                         <Link
@@ -196,13 +198,13 @@ export function Navbar() {
               <div className="hidden md:flex items-center gap-1">
                 {userLinks.slice(0, 2).map((link) => (
                   <Link key={link.href} href={link.href}>
-                    <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+                    <Button variant="ghost" size="icon" className="rounded-full text-muted-foreground hover:text-foreground">
                       <link.icon className="h-4 w-4" />
                     </Button>
                   </Link>
                 ))}
                 <Link href="/profile">
-                  <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+                  <Button variant="ghost" size="icon" className="rounded-full text-muted-foreground hover:text-foreground">
                     <div className="h-7 w-7 rounded-full bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center">
                       <User className="h-3.5 w-3.5 text-white" />
                     </div>
@@ -214,60 +216,60 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="lg:hidden"
+                className="lg:hidden rounded-full"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               >
                 {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </Button>
             </div>
           </div>
-        </div>
-      </nav>
+        </nav>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="fixed top-16 left-0 right-0 z-40 glass-strong border-b border-white/5 lg:hidden overflow-hidden"
-          >
-            <div className="p-4 space-y-2">
-              {/* Mobile Search */}
-              <form onSubmit={handleSearchSubmit} className="mb-4">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    placeholder="Search games..."
-                    value={searchValue}
-                    onChange={handleSearchChange}
-                    className="pl-9 bg-white/5 border-white/10"
-                  />
-                </div>
-              </form>
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -10 }}
+              className="pointer-events-auto absolute top-full left-4 right-4 mt-2 z-40 glass-strong rounded-3xl border border-white/10 lg:hidden overflow-hidden shadow-2xl"
+            >
+              <div className="p-4 space-y-2">
+                {/* Mobile Search */}
+                <form onSubmit={handleSearchSubmit} className="mb-4">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                      placeholder="Search games..."
+                      value={searchValue}
+                      onChange={handleSearchChange}
+                      className="pl-9 bg-white/5 border-white/10 rounded-full"
+                    />
+                  </div>
+                </form>
 
-              {[...navLinks, ...userLinks].map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                      isActive
-                        ? 'bg-neon-blue/10 text-neon-blue'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
-                    }`}
-                  >
-                    <link.icon className="h-5 w-5" />
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                {[...navLinks, ...userLinks].map((link) => {
+                  const isActive = pathname === link.href;
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-full transition-colors ${
+                        isActive
+                          ? 'bg-neon-blue/10 text-neon-blue'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
+                      }`}
+                    >
+                      <link.icon className="h-5 w-5" />
+                      {link.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
     </>
   );
 }
